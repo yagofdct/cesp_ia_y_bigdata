@@ -1,0 +1,378 @@
+{
+  "name": "U5_YFT",
+  "nodes": [
+    {
+      "parameters": {
+        "chunkSize": 300,
+        "chunkOverlap": 30,
+        "options": {}
+      },
+      "id": "d1ae7390-4173-4f9f-b530-13ba34e39581",
+      "name": "Recursive Character Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "position": [
+        576,
+        608
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        464,
+        432
+      ],
+      "id": "f47a9b34-c53b-474d-b5dc-6223c29d170a",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "Nh1CAzgi4YUtmynf",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f8e3ca9a-2887-4e6e-9c56-583a2453cafa",
+              "name": "procedimiento_soporte",
+              "value": "PROCEDIMIENTO DE SOPORTE TÉCNICO - TECHCORP  1. CLASIFICACIÓN DE INCIDENCIAS Las incidencias se clasifican en tres niveles de prioridad: - CRÍTICA (P1): Sistemas caídos que afectan a toda la empresa. Tiempo de   respuesta máximo: 30 minutos. Resolución objetivo: 4 horas. - ALTA (P2): Funcionalidad degradada que afecta a un departamento. Tiempo de   respuesta máximo: 2 horas. Resolución objetivo: 8 horas. - NORMAL (P3): Incidencias menores o consultas. Tiempo de respuesta máximo:   24 horas. Resolución objetivo: 3 días laborables.  2. PROCESO DE REPORTE Para reportar una incidencia: a) Acceder al portal de soporte: soporte.techcorp.internal b) Seleccionar la categoría correspondiente (Hardware, Software, Red, Accesos) c) Describir el problema con el máximo detalle posible d) Adjuntar capturas de pantalla si es relevante e) Indicar la urgencia y el impacto en el trabajo El sistema asignará automáticamente un número de ticket y un técnico responsable.  3. ESCALADO DE INCIDENCIAS Si una incidencia no se resuelve en el tiempo establecido: - P3 sin resolver en 3 días → Se escala a P2 automáticamente - P2 sin resolver en 8 horas → Se notifica al responsable de IT - P1 sin resolver en 4 horas → Se activa el protocolo de crisis con dirección  4. MANTENIMIENTO PROGRAMADO Los mantenimientos se realizan los domingos de 2:00 a 6:00. Se notifica a todos los empleados con al menos 48 horas de antelación por email y en el portal. Durante el mantenimiento, los sistemas pueden no estar disponibles. En caso de emergencia, contactar con el teléfono de guardia: ext. 9999.  5. POLÍTICA DE CONTRASEÑAS Las contraseñas deben cumplir los siguientes requisitos: - Mínimo 12 caracteres - Al menos una mayúscula, una minúscula, un número y un carácter especial - Cambio obligatorio cada 90 días - No se pueden reutilizar las últimas 5 contraseñas - Tras 5 intentos fallidos, la cuenta se bloquea automáticamente Para desbloquear la cuenta, contactar con soporte técnico presentando identificación válida.  6. SOFTWARE AUTORIZADO Solo se puede instalar software aprobado por el departamento de IT. La lista de software autorizado está disponible en la intranet. Para solicitar la instalación de software adicional, abrir un ticket de categoría \"Software\" indicando el nombre del programa, la justificación y la URL de descarga oficial.",
+              "type": "string"
+            },
+            {
+              "id": "aadccdf9-cb84-4f4c-ad26-05e0c3400ad6",
+              "name": "politicas_rrhh",
+              "value": "POLÍTICAS DE RECURSOS HUMANOS - TECHCORP  1. HORARIO LABORAL El horario estándar es de 9:00 a 18:00, de lunes a viernes, con una hora para la comida. Se permite flexibilidad horaria de entrada entre las 8:00 y las 10:00, ajustando la hora de salida proporcionalmente. El trabajo en remoto está permitido hasta 2 días por semana, previa aprobación del responsable directo.  2. VACACIONES Y PERMISOS Cada empleado dispone de 23 días laborables de vacaciones al año. Las vacaciones deben solicitarse con al menos 15 días de antelación a través del portal del empleado. No se pueden acumular más de 5 días de vacaciones de un año para otro. Los permisos por asuntos propios (máximo 3 días al año) deben comunicarse con 48 horas de antelación.  3. TELETRABAJO La política de teletrabajo permite hasta 2 días semanales de trabajo remoto. Es obligatorio estar disponible en horario laboral y utilizar la VPN corporativa. Las reuniones de equipo presenciales son obligatorias los martes y jueves. Para solicitar teletrabajo adicional, se requiere aprobación del director de área.  4. FORMACIÓN La empresa ofrece un presupuesto anual de 1.500 euros por empleado para formación profesional. Los cursos deben estar relacionados con el puesto de trabajo o con competencias estratégicas de la empresa. La solicitud se realiza a través del departamento de RRHH con al menos 30 días de antelación. Se requiere presentar un informe resumen tras completar la formación.  5. EVALUACIÓN DEL DESEMPEÑO Las evaluaciones se realizan semestralmente (junio y diciembre). El proceso incluye autoevaluación, evaluación del responsable directo y reunión de feedback. Los objetivos se fijan al inicio de cada semestre. La evaluación impacta en las decisiones de promoción y revisión salarial anual.  6. CÓDIGO DE VESTIMENTA La empresa mantiene un código de vestimenta business casual. En reuniones con clientes externos se requiere vestimenta formal. Los viernes se permite vestimenta casual. No se permite el uso de chanclas, camisetas de tirantes o ropa deportiva en las instalaciones de la empresa.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        208
+      ],
+      "id": "ecb54f12-d7b7-4b14-9a96-4694572518d3",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        208
+      ],
+      "id": "ec031678-a988-4a3e-9a68-41063e45546a",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "textSplittingMode": "custom",
+        "options": {}
+      },
+      "id": "8cf6474c-93cb-4d9e-9247-553335e905f3",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        576,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        208
+      ],
+      "id": "77bd7c8e-418c-4f83-aad1-ae3c41bf65ce",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "I285RHN0OM4jxbZc",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message.chat.id }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        1360,
+        208
+      ],
+      "id": "2ad12d1b-8de6-4eda-ae80-ff389e46fd04",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "# Rol\nEres el asistente virtual de TechCorp, especializado en responder preguntas\nsobre la documentación interna de la empresa.\n\n# Tareas\n- Responder a: {{ $json.chatInput }}\n- Buscar SIEMPRE en la documentación interna antes de responder\n- Proporcionar respuestas precisas basadas en los documentos de la empresa\n- Citar la fuente del documento cuando sea posible\n\n# Restricciones\n- SOLO responder con información que esté en la documentación de la empresa\n- Si la información no está en los documentos, responder: \"No dispongo de\n  información sobre ese tema en la documentación de la empresa. Te recomiendo\n  contactar con el departamento correspondiente.\"\n- NO inventar políticas, procedimientos ni datos que no estén en los documentos\n- NO responder preguntas que no estén relacionadas con la empresa\n\n# Formato\n- Respuestas claras y concisas\n- Usar viñetas cuando sea apropiado\n- Indicar el documento fuente cuando sea posible\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1296,
+        -16
+      ],
+      "id": "40588485-d626-4008-8890-5bc052851bf8",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "empresa-docs",
+          "mode": "list",
+          "cachedResultName": "empresa-docs"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        464,
+        -16
+      ],
+      "id": "966817c2-c6db-4a45-abd6-c07fe238c2bd",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "kv6ahAMLbPQzDf9t",
+          "name": "Pinecone account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Busca información en la documentación interna de la empresa TechCorp. Usa esta herramienta para responder preguntas sobre políticas de RRHH, procedimientos técnicos, soporte, vacaciones, teletrabajo y cualquier otra consulta sobre la empresa.",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "empresa-docs",
+          "mode": "list",
+          "cachedResultName": "empresa-docs"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        1360,
+        336
+      ],
+      "id": "343e456e-9d70-4f86-a5aa-876e0bf44c4c",
+      "name": "buscar_documentacion",
+      "credentials": {
+        "pineconeApi": {
+          "id": "kv6ahAMLbPQzDf9t",
+          "name": "Pinecone account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "userIds": "570168285"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        1024,
+        -16
+      ],
+      "id": "a5e39894-245f-49eb-9b96-92f3450e9ba3",
+      "name": "Telegram Trigger",
+      "webhookId": "fe1db577-172a-42aa-a6b2-0bad00694b98",
+      "credentials": {
+        "telegramApi": {
+          "id": "MciBwt4Ykjx3cjyB",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1600,
+        -16
+      ],
+      "id": "cfd96077-926a-427c-af88-d4cb1e1ad127",
+      "name": "Send a text message",
+      "webhookId": "4ae5ac8e-4580-41f6-8d88-8d6c1b5ae45a",
+      "credentials": {
+        "telegramApi": {
+          "id": "MciBwt4Ykjx3cjyB",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "buscar_documentacion",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "buscar_documentacion": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ff9a6ad2-66d4-43f5-aff3-96af0fabe318",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "65da7b515d735ae6105303706dd5e8917316d85fe574c9b213064c609cced21b"
+  },
+  "nodeGroups": [],
+  "id": "NIJu1un2xKYz5fe4",
+  "tags": []
+}
