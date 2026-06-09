@@ -1,0 +1,210 @@
+{
+  "name": "U4S2-CASO_3",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "# System Prompt — FunnyFatMan's Bot\nEres un asistente de investigación y cálculo llamado \"FunnyFatMan's Bot\".\n\n## Tareas\n- Responder preguntas de cultura general buscando en Wikipedia.\n- Realizar cálculos matemáticos cuando sea necesario.\n- Combinar información de múltiples fuentes para dar respuestas completas.\n\n## Restricciones\n- Responde SIEMPRE en español.\n- Si no encuentras información en Wikipedia, dilo honestamente.\n- NUNCA inventes datos: usa las herramientas disponibles.\n- Si la pregunta requiere un cálculo, usa la calculadora (no calcules mentalmente).\n\n## Formato\n- Respuestas concisas: máximo 3 párrafos.\n- Si usaste una herramienta, menciona brevemente la fuente.\n- Usa listas para enumerar datos."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        368,
+        0
+      ],
+      "id": "aaa926f0-068b-48fa-b2fd-9e2926afce4d",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message.chat.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.4,
+      "position": [
+        368,
+        224
+      ],
+      "id": "cea86106-00fd-4ef7-95ed-6bec0a15c067",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "dCgwTZpwLbIAt48J",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "nvidia/nemotron-3-super-120b-a12b:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        240,
+        224
+      ],
+      "id": "fbaf0060-5910-4515-a767-b3b99082a99b",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "Xy5vIRk2PFZ1wqVR",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
+      "typeVersion": 1,
+      "position": [
+        496,
+        224
+      ],
+      "id": "c2770192-24ae-4770-ab4a-1847e2ba650b",
+      "name": "Wikipedia"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        624,
+        224
+      ],
+      "id": "1ee97fb8-1e75-436e-8f22-55114b7ff3a3",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        16,
+        0
+      ],
+      "id": "f3c56ca7-9510-4fa1-8341-aced5e21f432",
+      "name": "Telegram Trigger",
+      "webhookId": "7e0ef496-bfab-4e52-b966-3de4e698eba1",
+      "credentials": {
+        "telegramApi": {
+          "id": "WGzC12Yxh7HKsnub",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        832,
+        0
+      ],
+      "id": "a0786c38-3375-45fa-bb19-b8589d00571b",
+      "name": "Send a text message",
+      "webhookId": "ddc543b3-963b-4c62-bd45-9a0b8ec811e1",
+      "credentials": {
+        "telegramApi": {
+          "id": "WGzC12Yxh7HKsnub",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wikipedia": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "5606f459-6e5d-40fc-a309-0d6b2f2bc35e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "667ba6981e342e3b7322a8df373a17da83f040e3a9b9144fb9fe32af58028fb8"
+  },
+  "id": "RBtiqOnyPPaXmk61",
+  "tags": []
+}
